@@ -1,6 +1,7 @@
-import { Client, GatewayIntentBits, Routes } from "discord.js";
-import { REST } from "@discordjs/rest";
-import { config } from "dotenv";
+import { Client, GatewayIntentBits, Routes } from 'discord.js';
+import { logEnvVariables } from './utils/logEnvVariables.js';
+import { REST } from '@discordjs/rest';
+import { config } from 'dotenv';
 import * as fs from 'fs/promises';
 
 config();
@@ -21,6 +22,9 @@ const commands = new Map();
 
 async function main() {
     try {
+
+        logEnvVariables();
+
         const commandFiles = await fs.readdir('./src/commands');
         for (const file of commandFiles.filter(file => file.endsWith('.js'))) {
             const commandModule = await import(`./commands/${file}`);
@@ -35,12 +39,10 @@ async function main() {
             }
         }
 
-        console.log('Started refreshing application (/) commands.');
+        console.log(' + Refreshing application (/) commands.');
         await rest.put(Routes.applicationCommands(clientID), { body: [...commands.values()].map(cmd => cmd.data) });
-        console.log('Successfully reloaded application (/) commands.');
 
         client.login(token);
-
     } catch (error) {
         console.error(error);
     }
@@ -48,7 +50,7 @@ async function main() {
 
 main();
 
-client.on("interactionCreate", async (interaction) => {
+client.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand()) return;
 
     const { commandName } = interaction;
@@ -64,4 +66,4 @@ client.on("interactionCreate", async (interaction) => {
     }
 });
 
-client.on("ready", () => { console.log("Bot is ready!"); });
+client.on('ready', () => { console.log(' + Bot is ready!'); });
