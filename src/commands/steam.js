@@ -2,8 +2,6 @@ import { getSteamStat } from "../utils/getSteamStat.js";
 import { capFirstChar } from "../utils/capFistChar.js";
 import { EmbedBuilder } from "@discordjs/builders";
 
-const steamRoutineMap = new Map();
-
 export const command = {
     data: {
         name: "cs",

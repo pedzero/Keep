@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits, Routes, Constants } from "discord.js";
+import { Client, GatewayIntentBits, Routes } from "discord.js";
 import { REST } from "@discordjs/rest";
 import { config } from "dotenv";
 import * as fs from 'fs/promises';
@@ -12,7 +12,8 @@ const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent
+        GatewayIntentBits.MessageContent,
+        GatewayIntentBits.GuildVoiceStates
     ]
 });
 const rest = new REST({ version: '10' }).setToken(token);

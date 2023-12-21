@@ -29,7 +29,7 @@ export async function getSteamStat() {
             gru_datacenter,
             matchmaking,
         };
-        
+
         return result;
 
     } catch (error) {
